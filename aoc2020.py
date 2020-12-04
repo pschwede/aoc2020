@@ -1,10 +1,17 @@
-from typing import List
+from typing import List, Tuple
 from re import compile
 
 PATTERN = compile(r"(?P<min>\d+)-(?P<max>\d+) (?P<what>\w): (?P<pass>\w+)")
 
-def trajectory(lines: List[str]) -> int:
+def trajectory(lines: List[str], slope: Tuple[int,int]) -> int:
     trees = 0
+    places = [[p for p in line.strip()] for line in lines]
+    pos = (0, 0)
+    while pos[1] < len(lines):
+        print(pos, places[pos[1]][pos[0] % len(places[0])])
+        if places[pos[1]][pos[0] % len(places[0])] == "#":
+            trees += 1
+        pos = (pos[0] + slope[0], pos[1] + slope[1])
     return trees
 
 def passcheck(lines: List[str]) -> int:
